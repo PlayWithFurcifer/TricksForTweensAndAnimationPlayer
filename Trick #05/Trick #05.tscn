@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Trick #05/KinematicBody2D.gd" type="Script" id=1]
+[ext_resource path="res://Trick #05/SirHonkalot_0.png" type="Texture" id=2]
+[ext_resource path="res://Trick #05/SirHonkalot_2.png" type="Texture" id=3]
+[ext_resource path="res://Trick #05/SirHonkalot_1.png" type="Texture" id=4]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.0653687, 0.140625, 0.071836, 1, 0.734375, 1, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="Animation" id=4]
+resource_name = "SpeedUp"
+length = 5.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("KinematicBody2D:moveSpeed")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 10.0755, -0.25, 0, 0.25, 0, 9.37779, -0.25, 0, 0.25, 0, 54.7304, -0.25, 0, 2.4, -0.232571, 9.14522, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.15, 1.97, 2.7, 4.88 )
+}
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+texture = SubResource( 2 )
+polygon = PoolVector2Array( -104, -64, 512, -64, 512, 64, -104, 64 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+script = ExtResource( 1 )
+moveSpeed = 10.0755
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="KinematicBody2D"]
+frames = SubResource( 3 )
+playing = true
+
+[node name="Camera2D" type="Camera2D" parent="KinematicBody2D"]
+current = true
+zoom = Vector2( 0.2, 0.2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "SpeedUp"
+anims/SpeedUp = SubResource( 4 )
